@@ -15,9 +15,7 @@ const Search = ({
   handleSearchQuery,
   handleSearchPage,
   showSearch,
-  moviesCat,
-  upcomingCat,
-  favoritesCat,
+  searchCat,
 }) => {
   const [query, setQuery] = useState(showSearch ? "" : "Search movies...");
 
@@ -41,9 +39,11 @@ const Search = ({
   }, [query, debouncedSearch, showSearch]);
 
   useEffect(() => {
-    // setQuery("");
-    handleSearchQuery("");
-  }, [upcomingCat, favoritesCat, moviesCat]);
+    if (!searchCat) {
+      handleSearchQuery("");
+      setQuery("");
+    }
+  }, [searchCat]);
 
   useEffect(() => {
     if (query === "") {
@@ -67,9 +67,7 @@ const Search = ({
 };
 
 const mapStateToProps = (state) => ({
-  moviesCat: state.categories.displayMovies,
-  upcomingCat: state.categories.displayUpcoming,
-  favoritesCat: state.categories.displayFavorites,
+  searchCat: state.categories.displaySearch,
 });
 
 const mapDispatchToProps = {
