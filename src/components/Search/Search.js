@@ -19,7 +19,7 @@ const Search = ({
   upcomingCat,
   favoritesCat,
 }) => {
-  const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(showSearch ? "" : "Search movies...");
 
   const handleInputChange = (event) => {
     setQuery(event.target.value);
@@ -41,7 +41,7 @@ const Search = ({
   }, [query, debouncedSearch, showSearch]);
 
   useEffect(() => {
-    setQuery("");
+    // setQuery("");
     handleSearchQuery("");
   }, [upcomingCat, favoritesCat, moviesCat]);
 

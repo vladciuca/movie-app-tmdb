@@ -4,6 +4,10 @@ export const ImageContainer = styled.div`
   position: relative;
   background-color: ${(props) => props.theme.bgPrimary};
   border-radius: 1rem;
+  height: 660px;
+  @media (min-width: 992px) {
+    height: 350px;
+  }
 `;
 
 export const Image = styled.img`
