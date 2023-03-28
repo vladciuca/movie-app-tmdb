@@ -23,7 +23,7 @@ const rootReducer = combineReducers({
 const persistConfig = {
   key: "root",
   storage,
-  blacklist: ["movies", "upcoming"],
+  blacklist: ["movies", "upcoming", "categories"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

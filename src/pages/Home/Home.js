@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 import { MovieGrid, SkeletonGrid, Error } from "components";
 import { getMovies } from "store/movies/moviesActions";
 import { getFavoriteMovies } from "store/favorites/favoritesActions";
-import { showMovies } from "store/categories/categoriesActions";
 
 const Home = ({
   displayMovies,
