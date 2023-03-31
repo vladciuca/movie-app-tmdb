@@ -20,6 +20,9 @@ export const Pagination = ({
   displaySearch,
   isLoading,
   getSearchResults,
+  movieList,
+  // favoritesList,
+  searchList,
 }) => {
   const page = displayMovies
     ? moviesPage
@@ -28,6 +31,8 @@ export const Pagination = ({
     : displaySearch
     ? searchPage
     : 1;
+
+  const list = displayMovies || displayUpcoming ? movieList : searchList;
 
   const nextPage = () => {
     if (isLoading) return;
@@ -74,13 +79,27 @@ export const Pagination = ({
 
   return (
     <PaginationContainer>
-      <Button onClick={prevPage}>
-        <BsCaretLeftFill />
-      </Button>
+      {page === 1 ? (
+        <Button disabled>
+          <BsCaretLeftFill color="rgba(255,255,255, 0.4)" />
+        </Button>
+      ) : (
+        <Button onClick={prevPage}>
+          <BsCaretLeftFill />
+        </Button>
+      )}
+
       <Page>{page}</Page>
-      <Button onClick={nextPage}>
-        <BsCaretRightFill />
-      </Button>
+
+      {list.length !== 20 ? (
+        <Button disabled>
+          <BsCaretRightFill color="rgba(255,255,255, 0.4)" />
+        </Button>
+      ) : (
+        <Button onClick={nextPage}>
+          <BsCaretRightFill />
+        </Button>
+      )}
     </PaginationContainer>
   );
 };
@@ -93,6 +112,9 @@ const mapStateToProps = (state) => ({
   displayMovies: state.categories.displayMovies,
   displayUpcoming: state.categories.displayUpcoming,
   displaySearch: state.categories.displaySearch,
+  movieList: state.movies.movieList,
+  // favoritesList: state.favorites.favoriteMovieList,
+  searchList: state.search.results,
 });
 
 const mapDispatchToProps = {

@@ -7,10 +7,11 @@ export const PaginationContainer = styled.div`
 `;
 
 export const Button = styled.div`
+  cursor: pointer;
+  cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
   display: flex;
   justify-content: center;
   align-items: center;
-  cursor: pointer;
   font-size: 1.5rem;
   color: ${(props) => props.theme.text};
 `;
