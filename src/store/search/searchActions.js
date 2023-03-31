@@ -9,6 +9,7 @@ import {
   FETCH_MOVIES_ERROR,
   FLUSH_MOVIES,
 } from "../movies/moviesReducer";
+// import { MOVIE_CATEGORY_FLAG } from "../categories/categoriesReducer";
 
 export const handleSearchPage = (page) => (dispatch, getState) => {
   const newPage = page;
@@ -29,17 +30,22 @@ export const getSearchResults = () => async (dispatch, getState) => {
     const base = process.env.REACT_APP_ENDPOINT;
     const apiKey = process.env.REACT_APP_API_KEY;
 
-    const { data } = await axios(
-      `${base}/search/movie?api_key=${apiKey}&language=en-US&page=${page}&include_adult=false&query=${query}`
-    );
+    if (query === "") {
+      return;
+      // dispatch({ type: MOVIE_CATEGORY_FLAG });
+    } else {
+      const { data } = await axios(
+        `${base}/search/movie?api_key=${apiKey}&language=en-US&page=${page}&include_adult=false&query=${query}`
+      );
 
-    dispatch({
-      type: FETCH_RESULTS_SUCCESS,
-      payload: data.results,
-    });
-    dispatch({
-      type: FLUSH_MOVIES,
-    });
+      dispatch({
+        type: FETCH_RESULTS_SUCCESS,
+        payload: data.results,
+      });
+      dispatch({
+        type: FLUSH_MOVIES,
+      });
+    }
   } catch (error) {
     dispatch({ type: FETCH_MOVIES_ERROR, payload: error.message });
   }

@@ -12,6 +12,7 @@ const Home = ({
   getMovies,
   getFavoriteMovies,
   favorites,
+  favoritesIdList,
   movies,
   moviesPage,
   upcomingPage,
@@ -26,7 +27,7 @@ const Home = ({
 
   useEffect(() => {
     getFavoriteMovies();
-  }, [getFavoriteMovies, displayFavorites]);
+  }, [getFavoriteMovies, displayFavorites, favoritesIdList]);
 
   const movieList =
     displayMovies || displayUpcoming
@@ -60,6 +61,7 @@ const mapStateToProps = (state) => ({
   displayUpcoming: state.categories.displayUpcoming,
   displaySearch: state.categories.displaySearch,
   favorites: state.favorites.favoriteMovieList,
+  favoritesIdList: state.favorites.favoritesList,
   movies: state.movies.movieList,
   moviesPage: state.movies.moviesPage,
   upcomingPage: state.movies.upcomingPage,

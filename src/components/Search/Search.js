@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import debounce from "lodash.debounce";
 import { ImSearch } from "react-icons/im";
 import { SearchContainer, SearchInput, SearchIcon } from "./Search.styles";
-import { showSearch } from "store/categories/categoriesActions";
+import { showSearch, showMovies } from "store/categories/categoriesActions";
 import {
   getSearchResults,
   handleSearchQuery,
@@ -15,6 +15,7 @@ const Search = ({
   handleSearchQuery,
   handleSearchPage,
   showSearch,
+  showMovies,
   searchCat,
 }) => {
   const [query, setQuery] = useState(showSearch ? "" : "Search movies...");
@@ -25,16 +26,21 @@ const Search = ({
 
   const debouncedSearch = useCallback(
     debounce(() => {
-      getSearchResults();
+      if (query.length > 0) {
+        getSearchResults();
+      }
     }, 500),
-    []
+    [query]
   );
 
   useEffect(() => {
-    if (query && query.length > 0) {
+    if (query.length > 0) {
       debouncedSearch(query);
       handleSearchQuery(query);
       showSearch();
+    } else {
+      showMovies();
+      handleSearchPage(1);
     }
   }, [query, debouncedSearch, showSearch]);
 
@@ -46,10 +52,10 @@ const Search = ({
   }, [searchCat]);
 
   useEffect(() => {
-    if (query === "") {
-      handleSearchPage(1);
-    }
-  }, [query]);
+    return () => {
+      debouncedSearch.cancel();
+    };
+  }, [debouncedSearch]);
 
   return (
     <SearchContainer>
@@ -73,6 +79,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   getSearchResults,
   showSearch,
+  showMovies,
   handleSearchQuery,
   handleSearchPage,
 };
